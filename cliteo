@@ -237,17 +237,26 @@ PARSER.add_argument(
     action="store_true",
     help="operate in verbose mode.",
 )
+
+PARSER.add_argument(
+    "-t", "--tempdir",
+    dest="opt_use_tempdir",
+    action="store_true",
+    help="run the test script in a clean temporary directory.",
+)
+
 # Main program starts here
 args = PARSER.parse_args()
 
 TESTS = Test.parse_text(open(args.arg_script_file).read())
 HEADER = args.arg_script_file
 
-ORIGDIR = os.getcwd()
-WORKDIR = tempfile.mkdtemp()
-os.chdir(WORKDIR)
-os.environ["PWD"] = os.getcwd()
-atexit.register(shutil.rmtree, WORKDIR)
+if args.opt_use_tempdir:
+    ORIGDIR = os.getcwd()
+    WORKDIR = tempfile.mkdtemp()
+    os.chdir(WORKDIR)
+    os.environ["PWD"] = os.getcwd()
+    atexit.register(shutil.rmtree, WORKDIR)
 
 fail_count = 0
 for test in TESTS:
