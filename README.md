@@ -16,13 +16,24 @@ All other lines are treated as comments and are ignored.
 
 For example,
 
-$ ls .
+$ ls
 ? 0
 > cliteo
 > LICENSE
 > README.md
+$ ls -a
+? 0
+> .
+> ..
+> cliteo
+> .git
+> .gitignore
+> LICENSE
+> README.md
 
 turns this file into a test script which cliteo can evaluate.
+
+If the test succeeds then the return value will be 0 and othewise 1.
 
 Usage:
 
